@@ -1,5 +1,5 @@
-NAME=worldd
-EXECUTABLE=1
+NAME=centerp
+EXECUTABLE=0
 PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
 DEPTARGET=

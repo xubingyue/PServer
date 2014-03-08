@@ -1,96 +1,158 @@
 NAME=scened
-CINC= 
-LDPATH= 
-DEPLIBS=
-
-# Default settings
+EXECUTABLE=1
 PREFIX?=/usr/local/$(NAME)
-INSTALL_BIN=$(PREFIX)/bin
+DEPTARET_DIR=..
+DEPTARGET=
 
+DEPLOCALINCLUDE=/usr/local/TLibC/include
+DEPLOCALLD=/usr/local/TLibC/lib
+DEPLOCALLIBS=tlibc
 
-CCCOLOR="\033[34m"
-LINKCOLOR="\033[34;1m"
-SRCCOLOR="\033[33m"
-BINCOLOR="\033[37;1m"
-MAKECOLOR="\033[32;1m"
-ENDCOLOR="\033[0m"
+CINC=-I include 
 
-QUIET_CC = @printf '    %b %b\n' $(CCCOLOR)CC$(ENDCOLOR) $(SRCCOLOR)$@$(ENDCOLOR) 1>&2;
-QUIET_LINK = @printf '    %b %b\n' $(LINKCOLOR)LINK$(ENDCOLOR) $(BINCOLOR)$@$(ENDCOLOR) 1>&2;
-QUIET_AR = @printf '    %b %b\n' $(LINKCOLOR)AR$(ENDCOLOR) $(BINCOLOR)$@$(ENDCOLOR) 1>&2;
-QUIET_INSTALL = @printf '    %b %b\n' $(LINKCOLOR)INSTALL$(ENDCOLOR) $(BINCOLOR)$@$(ENDCOLOR) 1>&2;
+CINC+=$(patsubst %, -I %, $(DEPLOCALINCLUDE))
+LDPATH=$(patsubst %, -L %, $(DEPLOCALLD))
+DEPLIBS=$(patsubst %, -l %, $(DEPLOCALLIBS))
 
+CINC+=$(patsubst %, -I $(DEPTARET_DIR)/%/include, $(DEPTARGET))
+LDPATH+=$(patsubst %, -L $(DEPTARET_DIR)/%/lib, $(DEPTARGET))
+DEPLIBS+=$(patsubst %, -l %, $(DEPTARGET))
+
+SOURCE=source
+INCLUDE=include
+BINARY=bin
+LIBRARY=lib
+ETC=etc
+
+TDATA=tdata
+THRIFT=thrift
 CC = gcc
+CXX= g++
 AR = ar
 RM = /bin/rm -f
-INSTALL=cp -pf
+INSTALL=cp -rpf
 
 ifdef MAKE_RELEASE
-CFLAGS = -std=c99 -pedantic -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -O3 $(CINC) -DMAKE_RELEASE
+CFLAGS = -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -O3 $(CINC) -DMAKE_RELEASE
+CXXFLAGS = -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -O3 $(CINC) -DMAKE_RELEASE
 else
-CFLAGS = -std=c99 -pedantic -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -g -ggdb $(CINC) -DMAKE_DEBUG
+CFLAGS = -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -g -ggdb $(CINC) -DMAKE_DEBUG
+CXXFLAGS = -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -g -ggdb $(CINC) -DMAKE_DEBUG
 endif
 
 
-REALCC=$(QUIET_CC)$(CC) $(CFLAGS)
-REALLD=$(QUIET_LINK)$(CC) $(LDPATH) $(DEPLIBS)
-REALAR=$(QUIET_AR)$(AR)
-REALINSTALL=$(QUIET_INSTALL)$(INSTALL)
+
+REALCC=$(CC) $(CFLAGS)
+REALLD=$(CC) $(LDPATH)
+REALCXX=$(CXX) $(CXXFLAGS)
+REALCXXLD=$(CXX) $(LDPATH)
+REALAR=$(AR)
+REALINSTALL=$(INSTALL)
+REALTDATA=$(TDATA) $(CINC)
+REALTHRIFT=$(THRIFT) --gen cpp:cob_style -out $(INCLUDE)
+
+THRIFT_FILES=$(wildcard $(INCLUDE)/*.thrift)
+THRIFT_SERVICES_FILES=$(wildcard $(INCLUDE)/*_services.thrift)
+
+THRIFT_CONSTANTS_CCFILE=$(THRIFT_FILES:.thrift=_constants.cpp)
+THRIFT_TYPES_CCFILE=$(THRIFT_FILES:.thrift=_types.cpp)
+THRIFT_SERVICES_CCFILE=$(THRIFT_SERVICES_FILES:.thrift=.cpp)
+
+THRIFT_CONSTANTS_HFILE=$(THRIFT_FILES:.thrift=_constants.h)
+THRIFT_TYPES_HFILE=$(THRIFT_FILES:.thrift=_types.h)
+THRIFT_SERVICES_HFILE=$(THRIFT_SERVICES_FILES:.thrift=.h)
+THRIFT_SERVICES_SKELETON_CCFILE=$(THRIFT_SERVICES_FILES:.thrift=_async_server.skeleton.cpp)
+THRIFT_SERVICES_SKELETON_CCFILE+=$(THRIFT_SERVICES_FILES:.thrift=_server.skeleton.cpp)
+
+THRIFT_OFILE=$(THRIFT_CONSTANTS_CCFILE:.cpp=.o)
+THRIFT_OFILE+=$(THRIFT_TYPES_CCFILE:.cpp=.o)
+THRIFT_OFILE+=$(THRIFT_SERVICES_CCFILE:.cpp=.o)
 
 
+TDATA_FILE=$(wildcard $(INCLUDE)/*.td)
 
-.PHONY: all clean
-TDATA_FILE=$(wildcard *.td)
-
-TYPES_HFILE=$(TDATA_FILE:.td=_types.h)
+TYPES_HFILE=$(patsubst %.td, %_types.h, $(TDATA_FILE))
 READER_HFILE=$(TDATA_FILE:.td=_reader.h)
 WRITER_HFILE=$(TDATA_FILE:.td=_writer.h)
-READER_CFILE=$(TDATA_FILE:.td=_reader.c)
-WRITER_CFILE=$(TDATA_FILE:.td=_writer.c)
+READER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_reader.c, $(TDATA_FILE))
+READER_OFILE=$(READER_CFILE:.c=.o)
+WRITER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_writer.c, $(TDATA_FILE))
+WRITER_OFILE=$(WRITER_CFILE:.c=.o)
 
-C_FILE=$(wildcard *.c) $(wildcard timer/*.c)
-OBJECT_FILE=$(C_FILE:.c=.o) $(READER_CFILE:.c=.o) $(WRITER_CFILE:.c=.o)
-LIB=lib$(NAME).a
-APP=$(NAME)
+CFILE=$(wildcard $(SOURCE)/*.c)
+OFILE=$(CFILE:.c=.o)
+
+LIB=$(LIBRARY)/lib$(NAME).a
+APP=$(BINARY)/$(NAME)
+ifeq ($(EXECUTABLE),1)
 TARGET=$(APP)
+else
+TARGET=$(LIB)
+endif
 
 .PHONY: all clean
 
-%_types.h:%.td
-	tdata -s $(SOURCE_PATH) -t $(SOURCE_PATH) -gen tlibc_types $(NAME)/$<
+all:$(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(TARGET)
 
-%_reader.h:%.td %_types.h
-	tdata -s $(SOURCE_PATH) -t $(SOURCE_PATH) -gen tlibc_reader_header $(NAME)/$<
-
-%_writer.h:%.td %_types.h
-	tdata -s $(SOURCE_PATH) -t $(SOURCE_PATH) -gen tlibc_writer_header $(NAME)/$<
-
-%_reader.c:%.td %_reader.h %_types.h
-	tdata -s $(SOURCE_PATH) -t $(SOURCE_PATH) -gen tlibc_reader $(NAME)/$<
-	
-%_writer.c:%.td %_writer.h %_types.h
-	tdata -s $(SOURCE_PATH) -t $(SOURCE_PATH) -gen tlibc_writer $(NAME)/$<
-
-%.o: %.c
-	$(REALCC) -c $(CFLAGS)  $<
-
-all:$(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(TARGET) 
-
-$(LIB): $(OBJECT_FILE)
+$(LIB): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
+	@mkdir -p $(LIBRARY)
 	$(REALAR) r $(LIB) $^
 
-$(APP): $(OBJECT_FILE)
-	$(REALLD) -o $@ $^ 
+$(APP): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
+	@mkdir -p $(BINARY)
+	$(REALCXXLD) -o $@ $^ $(DEPLIBS)
+
+release:
+	$(MAKE) all MAKE_RELEASE=1
+
+%.o: %.cpp
+	$(REALCXX) -o $@ -c $<
+
+$(TYPES_HFILE):$(TDATA_FILE)
+	$(REALTDATA) -o $(INCLUDE) -gen tlibc_types $^
+
+$(READER_HFILE):$(TDATA_FILE)
+	$(REALTDATA) -o $(INCLUDE) -gen tlibc_reader_header $^
+
+$(WRITER_HFILE):$(TDATA_FILE)
+	$(REALTDATA) -o $(INCLUDE) -gen tlibc_writer_header $^
+
+$(READER_CFILE):$(TDATA_FILE)
+	$(REALTDATA) -o $(SOURCE) -gen tlibc_reader $^
+	
+$(WRITER_CFILE):$(TDATA_FILE)
+	$(REALTDATA) -o $(SOURCE) -gen tlibc_writer $^
+
+%_constants.cpp:%.thrift
+	$(REALTHRIFT) $<
+
+%_types.cpp:%.thrift
+	$(REALTHRIFT) $<
+
+%_services.cpp:%_services.thrift
+	$(REALTHRIFT) $<
 
 install:
-	@mkdir -p $(INSTALL_BIN)
-	$(REALINSTALL) $(APP) $(INSTALL_BIN)
+	@mkdir -p $(PREFIX)
+ifeq ($(EXECUTABLE),1)
+	$(REALINSTALL) $(BINARY) $(PREFIX)
+	$(REALINSTALL) $(ETC) $(PREFIX)
+else
+	$(REALINSTALL) $(INCLUDE) $(PREFIX)
+	$(REALINSTALL) $(LIBRARY) $(PREFIX)
+endif
 
 tags:
-	@find /usr/local/tlibc/include/ -name "*.h" | xargs ctags -a --c-types=+p+x 
+	@find $(DEPINCLUDE) -name "*.h" | xargs ctags -a --c-types=+p+x 
 	@find . -name "*.c" -or -name "*.h" | xargs ctags -a --c-types=+p+x
 	@find . -name "*.h" -or -name "*.c" | cscope -Rbq
 
 clean:
 	@find . -name "*.o" | xargs $(RM)
-	@$(RM) $(TARGET) $(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(READER_CFILE) $(WRITER_CFILE) tags cscope.in.out cscope.po.out cscope.out
+	@$(RM) $(TARGET) $(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(READER_CFILE) $(READER_OFILE) $(WRITER_CFILE) $(WRITER_OFILE) tags cscope.in.out cscope.po.out cscope.out
+	@$(RM) $(THRIFT_CONSTANTS_CCFILE) $(THRIFT_TYPES_CCFILE) $(THRIFT_SERVICES_CCFILE)
+	@$(RM) $(THRIFT_CONSTANTS_HFILE) $(THRIFT_TYPES_HFILE) $(THRIFT_SERVICES_HFILE)
+	@$(RM) $(THRIFT_SERVICES_CCFILE)
+	@$(RM) $(THRIFT_SERVICES_HFILE)
+	@$(RM) $(THRIFT_SERVICES_SKELETON_CCFILE)
+

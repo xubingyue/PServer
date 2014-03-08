@@ -1,14 +1,16 @@
-SUBMODS = scened worldd
+SUBMODS = centerp centerd scened  worldd
 
 CLEANTARGET = clean
 INSTALLTARGET = install
 TAGSTARGET = tags
+RELEASETARGET = release
 
 SUBMODSCLEAN = $(patsubst %, %.$(CLEANTARGET), $(SUBMODS)) 
 SUBMODSINSTALL = $(patsubst %, %.$(INSTALLTARGET), $(SUBMODS)) 
 SUBMODSTAGS = $(patsubst %, %.$(TAGSTARGET), $(SUBMODS))
+SUBMODSRELEASE = $(patsubst %, %.$(RELEASETARGET), $(SUBMODS))
 
-.PHONY: all $(CLEANTARGET) $(INSTALLTARGET) $(SUBMODS) $(TAGSTARGET)
+.PHONY: all $(CLEANTARGET) $(INSTALLTARGET) $(SUBMODS) $(TAGSTARGET) $(RELEASETARGET)
 
 all: $(SUBMODS)
 
@@ -17,19 +19,21 @@ $(CLEANTARGET): $(SUBMODSCLEAN)
 $(INSTALLTARGET): $(SUBMODSINSTALL)
 
 $(TAGSTARGET): $(SUBMODSTAGS)
+
+$(RELEASETARGET): $(SUBMODSRELEASE)
 	
 $(SUBMODS):
-	@cd $@ && $(MAKE);
+	cd $@ && $(MAKE);
 
 $(SUBMODSTAGS): 
-	@cd $(patsubst %.$(TAGSTARGET),%, $@)  && $(MAKE) $(TAGSTARGET);
+	cd $(patsubst %.$(TAGSTARGET),%, $@)  && $(MAKE) $(TAGSTARGET);
 
 $(SUBMODSCLEAN): 
-	@cd $(patsubst %.$(CLEANTARGET),%, $@)  && $(MAKE) $(CLEANTARGET);
+	cd $(patsubst %.$(CLEANTARGET),%, $@)  && $(MAKE) $(CLEANTARGET);
 
 $(SUBMODSINSTALL): 
-	@cd $(patsubst %.$(INSTALLTARGET),%, $@)  && $(MAKE) $(INSTALLTARGET);
+	cd $(patsubst %.$(INSTALLTARGET),%, $@)  && $(MAKE) $(INSTALLTARGET);
 
-release:
-	$(MAKE) all MAKE_RELEASE=1
+$(SUBMODSRELEASE):
+	cd $(patsubst %.$(RELEASETARGET),%, $@)  && $(MAKE) $(RELEASETARGET);
 
