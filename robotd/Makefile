@@ -1,12 +1,12 @@
-NAME=centerd
+NAME=robotd
 EXECUTABLE=1
 PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
-DEPTARGET=common centerp
+DEPTARGET=
 
-DEPLOCALINCLUDE=/usr/local/TLibC/include /usr/local/include
-DEPLOCALLD=/usr/local/TLibC/lib /usr/local/lib/
-DEPLOCALLIBS=tlibc thrift
+DEPLOCALINCLUDE=/usr/local/TLibC/include
+DEPLOCALLD=/usr/local/TLibC/lib
+DEPLOCALLIBS=tlibc
 
 CINC=-I include 
 
@@ -79,10 +79,8 @@ READER_OFILE=$(READER_CFILE:.c=.o)
 WRITER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_writer.c, $(TDATA_FILE))
 WRITER_OFILE=$(WRITER_CFILE:.c=.o)
 
-CXXFILE=$(wildcard $(SOURCE)/*.cpp $(SOURCE)/operator/*.cpp)
 CFILE=$(wildcard $(SOURCE)/*.c)
 OFILE=$(CFILE:.c=.o)
-OFILE+=$(CXXFILE:.cpp=.o)
 
 LIB=$(LIBRARY)/lib$(NAME).a
 APP=$(BINARY)/$(NAME)
@@ -109,9 +107,6 @@ release:
 
 %.o: %.cpp
 	$(REALCXX) -o $@ -c $<
-
-#%.o: %.c
-#	$(REALC) -o $@ -c $<
 
 $(TYPES_HFILE):$(TDATA_FILE)
 	$(REALTDATA) -o $(INCLUDE) -gen tlibc_types $^

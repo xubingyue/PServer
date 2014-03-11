@@ -5,6 +5,6 @@ include "auth.thrift"
 
 service centerp_services
 {
-	auth.LoginRsp Login(1: auth.LoginReq account);
+	auth.login_rsp_t login(1: auth.login_req_t account);
 }
 

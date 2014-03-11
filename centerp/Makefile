@@ -49,7 +49,7 @@ REALCXXLD=$(CXX) $(LDPATH)
 REALAR=$(AR)
 REALINSTALL=$(INSTALL)
 REALTDATA=$(TDATA) $(CINC)
-REALTHRIFT=$(THRIFT) --gen cpp:cob_style -out $(INCLUDE)
+REALTHRIFT=$(THRIFT) --gen cpp -out $(INCLUDE)
 
 THRIFT_FILES=$(wildcard $(INCLUDE)/*.thrift)
 THRIFT_SERVICES_FILES=$(wildcard $(INCLUDE)/*_services.thrift)
