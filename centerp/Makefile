@@ -2,7 +2,7 @@ NAME=centerp
 EXECUTABLE=0
 PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
-DEPTARGET=
+DEPTARGET=common
 
 DEPLOCALINCLUDE=/usr/local/TLibC/include
 DEPLOCALLD=/usr/local/TLibC/lib

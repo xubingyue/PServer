@@ -1,4 +1,4 @@
-SUBMODS = common centerp centerd worldd scened robotd
+SUBMODS = common centerp centerd smanagerd scened robotd
 
 CLEANTARGET = clean
 INSTALLTARGET = install

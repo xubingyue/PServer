@@ -2,7 +2,7 @@ NAME=robotd
 EXECUTABLE=1
 PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
-DEPTARGET=
+DEPTARGET=common centerp
 
 DEPLOCALINCLUDE=/usr/local/TLibC/include
 DEPLOCALLD=/usr/local/TLibC/lib
@@ -79,8 +79,8 @@ READER_OFILE=$(READER_CFILE:.c=.o)
 WRITER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_writer.c, $(TDATA_FILE))
 WRITER_OFILE=$(WRITER_CFILE:.c=.o)
 
-CFILE=$(wildcard $(SOURCE)/*.c)
-OFILE=$(CFILE:.c=.o)
+CFILE=$(wildcard $(SOURCE)/*.cpp)
+OFILE=$(CFILE:.cpp=.o)
 
 LIB=$(LIBRARY)/lib$(NAME).a
 APP=$(BINARY)/$(NAME)
