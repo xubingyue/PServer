@@ -4,9 +4,10 @@ PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
 DEPTARGET=common centerp
 
-DEPLOCALINCLUDE=/usr/local/TLibC/include
-DEPLOCALLD=/usr/local/TLibC/lib
-DEPLOCALLIBS=tlibc
+SHARED_DIR=../../PShared
+DEPLOCALINCLUDE=/usr/local/TLibC/include $(SHARED_DIR)/centerp/include
+DEPLOCALLD=/usr/local/TLibC/lib $(SHARED_DIR)/centerp/lib
+DEPLOCALLIBS=tlibc centerp
 
 CINC=-I include 
 

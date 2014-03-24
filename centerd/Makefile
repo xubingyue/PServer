@@ -2,11 +2,12 @@ NAME=centerd
 EXECUTABLE=1
 PREFIX?=/usr/local/$(NAME)
 DEPTARET_DIR=..
-DEPTARGET=common centerp
+DEPTARGET=common
 
-DEPLOCALINCLUDE=/usr/local/TLibC/include /usr/local/include
-DEPLOCALLD=/usr/local/TLibC/lib /usr/local/lib/
-DEPLOCALLIBS=tlibc thrift
+SHARED_DIR=../../PShared
+DEPLOCALINCLUDE=/usr/local/TLibC/include /usr/local/include $(SHARED_DIR)/centerp/include
+DEPLOCALLD=/usr/local/TLibC/lib /usr/local/lib/ $(SHARED_DIR)/centerp/lib
+DEPLOCALLIBS=tlibc thrift centerp
 
 CINC=-I include 
 

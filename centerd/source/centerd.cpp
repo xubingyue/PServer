@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 		goto ERROR_RET;
 	}
 	
-	bserver_work(80, 10);
+	bserver_work(7001, 10);
 
 	return 0;	
 ERROR_RET:
