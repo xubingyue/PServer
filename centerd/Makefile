@@ -8,4 +8,4 @@ DEPLOCALINCLUDE=/usr/local/TLibC/include /usr/local/include $(SHARED_DIR)/center
 DEPLOCALLD=/usr/local/TLibC/lib /usr/local/lib/ $(SHARED_DIR)/centerp/lib
 DEPLOCALLIBS=tlibc thrift centerp
 
-include ../build_common.mk
+include ../build.mk

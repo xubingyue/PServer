@@ -2,4 +2,4 @@ NAME=common
 EXECUTABLE=0
 USE_CXX=1
 
-include ../build_common.mk
+include ../build.mk

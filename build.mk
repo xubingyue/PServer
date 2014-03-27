@@ -106,10 +106,12 @@ all:$(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(TARGET)
 
 $(LIB): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
 	@mkdir -p $(LIBRARY)
+	@mkdir -p $(INCLUDE)
 	$(REALAR) r $(LIB) $^
 
 $(APP): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
 	@mkdir -p $(BINARY)
+	@mkdir -p $(ETC)
 	$(REALLD) -o $@ $^ $(DEPLIBS)
 
 release:

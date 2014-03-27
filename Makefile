@@ -1,3 +1,3 @@
 SUBMODS = common centerd smanagerd scened robotd
 
-include ./search_common.mk
+include ./search.mk

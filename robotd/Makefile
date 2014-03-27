@@ -8,4 +8,4 @@ DEPLOCALINCLUDE=/usr/local/TLibC/include $(SHARED_DIR)/centerp/include
 DEPLOCALLD=/usr/local/TLibC/lib $(SHARED_DIR)/centerp/lib
 DEPLOCALLIBS=tlibc centerp
 
-include ../build_common.mk
+include ../build.mk
