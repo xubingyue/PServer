@@ -100,7 +100,7 @@ else
 TARGET=$(LIB)
 endif
 
-.PHONY: all clean
+.PHONY: all clean install tags
 
 all:$(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(TARGET)
 
@@ -160,9 +160,9 @@ else
 endif
 
 tags:
-	@find $(DEPLOCALINCLUDE) -name "*.h" | xargs ctags -a --c-types=+p+x 
-	@find . -name "*.c" -or -name "*.h" | xargs ctags -a --c-types=+p+x
-	@find . -name "*.h" -or -name "*.c" | cscope -Rbq
+	@find $(DEPLOCALINCLUDE) -name "*.h" -or -name "*.hpp" | xargs ctags -a --c-types=+p+x 
+	@find . -name "*.c" -or -name "*.h" -or -name "*.cpp" -or -name "*.hpp" | xargs ctags -a --c-types=+p+x
+	@find . -name "*.h" -or -name "*.c" -or -name "*.cpp" -or -name "*.hpp" | cscope -Rbq
 
 clean:
 	@find . -name "*.o" | xargs $(RM)
