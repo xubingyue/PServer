@@ -1,5 +1,6 @@
 #include "common.h"
 
-void test()
+int test()
 {
+	return 0;
 }

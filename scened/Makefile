@@ -1,11 +1,16 @@
 BINARY=bin/scened
 TARGET= $(BINARY)
+LINK=g++
 HOME=../
-CINC=-I/usr/local/tlibc/include/
-LDPATH=-L/usr/local/tlibc/lib
-DEPLIBS=-ltlibc
+CINC=-I/usr/local/tsf4g/include -I/usr/local/tlibc/include -Itdr
+LDPATH=-L/usr/local/tsf4g/lib -L/usr/local/tlibc/lib
+DEPLIBS=-ltapp -ltlibc
+DEPOFILE=
 
-CFILE=$(wildcard source/*.c)
+TYPES_TDR_FILE=$(wildcard tdr/*.tdr)
+READER_TDR_FILE=$(wildcard tdr/*.tdr)
+
+CPPFILE=$(wildcard source/*.cpp)
 DFILE=$(wildcard source/*.d)
 
 include $(HOME)/build.mk

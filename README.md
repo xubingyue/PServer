@@ -4,8 +4,8 @@ PServer
 Introduction
 ------------
 
-- center 登录和支付服务器
-- guard 运维服务器
+- center 登录和支付PHP服务器
+- guard 运维PHP服务器
 - mysql_proxyd 数据库代理服务器
 - scened 场景服务器
 - robotd 机器人

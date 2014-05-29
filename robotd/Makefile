@@ -1,11 +1,13 @@
 BINARY=bin/robotd
 TARGET= $(BINARY)
+LINK=g++
 HOME=../
-CINC=-I/usr/local/tlibc/include/
+CINC=-I/usr/local/tlibc/include/ -I$(HOME)/common/include
 LDPATH=-L/usr/local/tlibc/lib
 DEPLIBS=-ltlibc
+DEPOFILE=$(HOME)/common/lib/libcommon.a
 
-CFILE=$(wildcard source/*.c)
+CPPFILE=$(wildcard source/*.cpp)
 DFILE=$(wildcard source/*.d)
 
 include $(HOME)/build.mk
