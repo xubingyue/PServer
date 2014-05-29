@@ -1,11 +1,8 @@
 #include <stdio.h>
 
-extern "C"
-{
 #include "tapp.h"
 #include "scened_config_reader.h"
 #include "scened_config_types.h"
-}
 
 scened_config_t g_config;
 

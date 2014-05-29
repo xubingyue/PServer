@@ -1,0 +1,6 @@
+struct mysql_proxyd_config
+{
+	int32								input_tbuskey;
+	int32								output_tbuskey;
+};
+

@@ -12,6 +12,7 @@ READER_TDR_FILE=$(wildcard tdr/*.tdr)
 
 CPPFILE=$(wildcard source/*.cpp)
 DFILE=$(wildcard source/*.d)
+DFILE+=$(wildcard tdr/*.d)
 
 include $(HOME)/build.mk
 
