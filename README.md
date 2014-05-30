@@ -31,28 +31,40 @@ Install
     4. ./configure --with-http_ssl_module
     5. make
     6. make install
-    7. nginx.conf配置样例
+	7. 生成证书
+			cd /usr/local/nginx/conf
+			openssl genrsa -des3 -out server.key 1024
+			openssl req -new -key server.key -out server.csr
+			openssl rsa -in server.key -out server_nopwd.key
+			openssl x509 -req -days 365 -in server.csr -signkey server_nopwd.key -out server.crt
 
-        	user  randyliu
-	        server
-    	    {
-        	    listen       80;
-            	server_name  localhost;
-	            root  /home/randyliu/pgame/trunk/pguard/htdocs;
-    	        index  index.php;
-	            client_max_body_size 2048k;
-    	        location /
-        	    {
-            	    try_files $uri @php;
-	            }
-    	        location @php 
-        	    {
-            	    fastcgi_pass   127.0.0.1:9000;
-                	fastcgi_index  index.php;
-	                fastcgi_param  SCRIPT_FILENAME /home/randyliu/pgame/trunk/pguard/scripts/main.php; 
-    	            include        fastcgi_params;
-        	    }
+    8. nginx.conf配置样例
+
+
+			server {
+				listen       443 ssl;
+				index  index.php;
+				client_max_body_size 2048k;
+				root  /home/randyliu/github/pserver/guard/htdocs;
+				ssl_certificate      server.crt;
+				ssl_certificate_key  server_nopwd.key;
+				ssl_session_cache    shared:SSL:1m;
+				ssl_session_timeout  5m;
+				ssl_ciphers  HIGH:!aNULL:!MD5;
+				ssl_prefer_server_ciphers  on;
+				location /
+				{
+					try_files $uri @php;
+				}
+				location @php 
+				{
+					fastcgi_pass   127.0.0.1:9000;
+					fastcgi_index  index.php;
+					fastcgi_param  SCRIPT_FILENAME /home/randyliu/github/pserver/guard/scripts/main.php; 
+					include        fastcgi_params;
+				}
 			}
+
 
 - Php
 
