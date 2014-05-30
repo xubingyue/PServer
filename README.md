@@ -41,12 +41,10 @@ Install
             root  /home/randyliu/pgame/trunk/pguard/htdocs;
             index  index.php;
             client_max_body_size 2048k;
-
             location /
             {
                 try_files $uri @php;
             }
-
             location @php 
             {
                 fastcgi_pass   127.0.0.1:9000;
@@ -54,7 +52,7 @@ Install
                 fastcgi_param  SCRIPT_FILENAME /home/randyliu/pgame/trunk/pguard/scripts/main.php; 
                 include        fastcgi_params;
             }
-        }
+		}
 
 - Php
 
@@ -111,5 +109,9 @@ Install
     5. chkconfig nginx on
     6. chkconfig --add mysql
     7. chkconfig mysql on
+
+- iptables
+	iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+	iptables -I OUTPUT -p tcp --sport 80 -j ACCEPT
 
 
