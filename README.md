@@ -33,26 +33,26 @@ Install
     6. make install
     7. nginx.conf配置样例
 
-        user  randyliu
-        server
-        {
-            listen       80;
-            server_name  localhost;
-            root  /home/randyliu/pgame/trunk/pguard/htdocs;
-            index  index.php;
-            client_max_body_size 2048k;
-            location /
-            {
-                try_files $uri @php;
-            }
-            location @php 
-            {
-                fastcgi_pass   127.0.0.1:9000;
-                fastcgi_index  index.php;
-                fastcgi_param  SCRIPT_FILENAME /home/randyliu/pgame/trunk/pguard/scripts/main.php; 
-                include        fastcgi_params;
-            }
-		}
+        	user  randyliu
+	        server
+    	    {
+        	    listen       80;
+            	server_name  localhost;
+	            root  /home/randyliu/pgame/trunk/pguard/htdocs;
+    	        index  index.php;
+	            client_max_body_size 2048k;
+    	        location /
+        	    {
+            	    try_files $uri @php;
+	            }
+    	        location @php 
+        	    {
+            	    fastcgi_pass   127.0.0.1:9000;
+                	fastcgi_index  index.php;
+	                fastcgi_param  SCRIPT_FILENAME /home/randyliu/pgame/trunk/pguard/scripts/main.php; 
+    	            include        fastcgi_params;
+        	    }
+			}
 
 - Php
 
