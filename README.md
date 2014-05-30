@@ -71,6 +71,25 @@ Install
         user = randyliu
         group = users
 
+- XDebug
+
+	1. 修改/usr/local/etc/php.ini文件， 加入如下内容：
+
+
+			[Xdebug]
+			xdebug.profiler_enable=on
+			xdebug.trace_output_dir="/var/log/xdebug"
+			xdebug.profiler_output_dir="/var/log/xdebug"
+			xdebug.max_nesting_level = 10000
+			xdebug.auto_trace=On
+			xdebug.show_exception_trace=On
+			xdebug.remote_enable=On
+			xdebug.remote_host=192.168.0.29
+			xdebug.remote_port=9000
+			xdebug.remote_handler=dbgp
+	2. mkdir -p /var/log/xdebug
+	3. 修改xdebug.remote_host为开发机地址, xdebug需要connect这个主机的9000端口。
+
 - MySQL
 
     1. tar -xf mysql-5.6.16.tar.gz
@@ -115,5 +134,4 @@ Install
 
 		iptables -I INPUT -p tcp --dport 80 -j ACCEPT
 		iptables -I OUTPUT -p tcp --sport 80 -j ACCEPT
-
-
+		service iptables save
