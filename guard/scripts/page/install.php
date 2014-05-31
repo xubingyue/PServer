@@ -8,7 +8,7 @@
 				<table>
 					<tr>
 						<td class = "tdleft">安装路径:</td>
-						<td class = "tdright"><input type = "text" value = "<?php echo PUBLISH_DIR; ?>" id = "install_publish_dir" class = "right_text"/></td>
+						<td class = "tdright"><input type = "text" value = "<?php echo PUBLISH_DIR; ?>" id = "install_publish_dir" class = "right_text" disabled="true"/></td>
 					</tr>
 					<tr>
 						<td class = "tdleft">安装文件:</td>
