@@ -1,9 +1,9 @@
 <?php
-	function page_process()
+	function page_setup()
 	{
 ?>
 	<div>
-		process
+	setup
 	</div>
 <?php
 	}
