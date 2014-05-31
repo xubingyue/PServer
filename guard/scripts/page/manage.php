@@ -1,9 +1,9 @@
 <?php
-	function page_process()
+	function page_manage()
 	{
 ?>
 	<div>
-		process
+	manage
 	</div>
 <?php
 	}

@@ -1,27 +1,33 @@
 <?php
-require_once (dirname(__FILE__)) . '/process.php';
-require_once (dirname(__FILE__)) . '/help.php';
+require_once (dirname(__FILE__)) . '/manage.php';
+require_once (dirname(__FILE__)) . '/service.php';
+require_once (dirname(__FILE__)) . '/setup.php';
 require_once (dirname(__FILE__)) . '/install.php';
+require_once (dirname(__FILE__)) . '/help.php';
 
 function page_master($title, $hi, $content)
 {
 	$info = array();
 
-	$info['menu'][0]['content'] = "进程";
-	$info['menu'][0]['href'] = "/process";
+	$info['menu'][0]['content'] = "管理";
+	$info['menu'][0]['href'] = "/manage";
 	$info['menu'][0]['highlight'] = false;
 
-	$info['menu'][1]['content'] = "设置";
-	$info['menu'][1]['href'] = "/setup";
+	$info['menu'][1]['content'] = "服务";
+	$info['menu'][1]['href'] = "/service";
 	$info['menu'][1]['highlight'] = false;
 
-	$info['menu'][2]['content'] = "安装";
-	$info['menu'][2]['href'] = "/install";
+	$info['menu'][2]['content'] = "设置";
+	$info['menu'][2]['href'] = "/setup";
 	$info['menu'][2]['highlight'] = false;
 
-	$info['menu'][3]['content'] = "帮助";
-	$info['menu'][3]['href'] = "/help";
+	$info['menu'][3]['content'] = "安装";
+	$info['menu'][3]['href'] = "/install";
 	$info['menu'][3]['highlight'] = false;
+
+	$info['menu'][4]['content'] = "帮助";
+	$info['menu'][4]['href'] = "/help";
+	$info['menu'][4]['highlight'] = false;
 
 
 	$info['menu'][$hi]['highlight'] = true;
