@@ -46,7 +46,7 @@ Install
 			server {
 				listen       443 ssl;
 				index  index.php;
-				client_max_body_size 2048k;
+				client_max_body_size 100m;
 				root  /home/randyliu/github/pserver/guard/htdocs;
 				ssl_certificate      server.crt;
 				ssl_certificate_key  server_nopwd.key;
@@ -77,9 +77,13 @@ Install
     5. make
     6. make install
     7. cp php.ini-development /usr/local/etc/php.ini
-    8. 修改php.ini
+    8. 修改php.ini, 支持大文件上传。
         date.timezone = Asia/Shanghai
         display_errors = Off
+		upload_max_filesize = 100M
+		post_max_size = 100M
+		max_execution_time = 600
+		max_input_time = 600
     9. cp /usr/local/etc/php-fpm.conf.default php-fpm.conf
     10. 修改php-fpm.conf
         user = randyliu

@@ -6,6 +6,7 @@
     define('GATE_DIR', SCRIPTS_DIR . '/gate' );
         
 	//之前要包含session中所需要用到的类
+	require_once SCRIPTS_DIR . '/config.php';
 	require_once CORE_DIR . '/process_manager.php';
 	session_start();
 

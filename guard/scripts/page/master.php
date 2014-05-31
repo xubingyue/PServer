@@ -29,9 +29,15 @@ function page_master($title, $hi, $content)
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $title ?></title>
 		<link rel="stylesheet" href="/css/frame.css" type="text/css" media="all" />
+
         <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="/js/jquery.json-2.4.min.js"></script>
         <script type="text/javascript" src="/js/md5-min.js"></script>
+        <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+
+
+		<link rel="stylesheet" href="/css/setup.css" type="text/css" media="all" />
+        <script type="text/javascript" src="/js/setup.js"></script>
 </head>
 <body>
     <div id="container">

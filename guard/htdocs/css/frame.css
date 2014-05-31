@@ -17,6 +17,12 @@ a
 	text-decoration:none;
 }
 
+.Btn
+{
+	color: #62A4DA;
+	cursor: pointer;
+}
+
 #container{
 }
 
