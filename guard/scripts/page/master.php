@@ -1,7 +1,7 @@
 <?php
 require_once (dirname(__FILE__)) . '/process.php';
 require_once (dirname(__FILE__)) . '/help.php';
-require_once (dirname(__FILE__)) . '/setup.php';
+require_once (dirname(__FILE__)) . '/install.php';
 
 function page_master($title, $hi, $content)
 {
@@ -11,13 +11,17 @@ function page_master($title, $hi, $content)
 	$info['menu'][0]['href'] = "/process";
 	$info['menu'][0]['highlight'] = false;
 
-	$info['menu'][2]['content'] = "设置";
-	$info['menu'][2]['href'] = "/setup";
+	$info['menu'][1]['content'] = "设置";
+	$info['menu'][1]['href'] = "/setup";
+	$info['menu'][1]['highlight'] = false;
+
+	$info['menu'][2]['content'] = "安装";
+	$info['menu'][2]['href'] = "/install";
 	$info['menu'][2]['highlight'] = false;
 
-	$info['menu'][1]['content'] = "帮助";
-	$info['menu'][1]['href'] = "/help";
-	$info['menu'][1]['highlight'] = false;
+	$info['menu'][3]['content'] = "帮助";
+	$info['menu'][3]['href'] = "/help";
+	$info['menu'][3]['highlight'] = false;
 
 
 	$info['menu'][$hi]['highlight'] = true;
@@ -36,8 +40,8 @@ function page_master($title, $hi, $content)
         <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
 
 
-		<link rel="stylesheet" href="/css/setup.css" type="text/css" media="all" />
-        <script type="text/javascript" src="/js/setup.js"></script>
+		<link rel="stylesheet" href="/css/install.css" type="text/css" media="all" />
+        <script type="text/javascript" src="/js/install.js"></script>
 </head>
 <body>
     <div id="container">
@@ -77,8 +81,8 @@ function page_master($title, $hi, $content)
 						case 'help':
 							page_help(null);
 							break;
-						case 'setup':
-							page_setup(null);
+						case 'install':
+							page_install(null);
 							break;
 					}                                
 				?>

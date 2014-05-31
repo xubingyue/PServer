@@ -1,0 +1,60 @@
+/*
+  install.css
+*/
+
+.install_info
+{
+	width:100%;
+}
+
+.install_control
+{
+	margin-top:10px;
+	float:left;
+	width:100%;
+}
+
+.install_result
+{
+	float:right;
+}
+
+.btn
+{
+	float:left;
+}
+.uploadBtn
+{
+	float:left;
+}
+
+.install_info tr
+{
+	width:100%;
+}
+
+.install_info .tdleft
+{
+	width:20%;
+}
+
+.install_info .tdright
+{
+	width:80%;
+}
+
+.install_info form
+{
+	width:100%;
+}
+.install_info form table
+{
+	width:100%;
+}
+
+.right_text
+{
+	margin:0;
+	float:right;
+	width:100%;
+}
