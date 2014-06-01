@@ -20,7 +20,7 @@ dep:
 	@mkdir -p bin
 
 cov:$(CFILE) $(CPPFILE)
-	gcov -n -b -osource/ $^
+	gcov -n -osource/ $^ | egrep -o '[0-9]+\.[0-9]+' | awk '{tot+=$$1}END{print "平均代码覆盖率: " tot/NR "%"}'
 
 install:
 	mkdir -p $(PREFIX)
