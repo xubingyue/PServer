@@ -37,7 +37,7 @@ function page_master($title, $hi, $content)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?php echo $title ?></title>
+        <title>Guard-<?php echo $title ?></title>
 		<link rel="stylesheet" href="/css/frame.css" type="text/css" media="all" />
 
         <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>

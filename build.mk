@@ -13,17 +13,27 @@ CINC?=
 ifdef release
 DEBUG_CFLAGS=-O3 -DMAKE_RELEASE
 else
-DEBUG_CFLAGS=-g -ggdb -DMAKE_DEBUG
+DEBUG_CFLAGS=-g3 -ggdb3 -DMAKE_DEBUG
 endif
+
+ifdef coverage
+COVERAGE_FLAGS=--coverage
+COVERAGE_LINK=-fprofile-arcs -lgcov
+#-fprofile-arcs -ftest-coverage
+else
+COVERAGE_FLAGS=
+COVERAGE_LINK=
+endif
+
 CFLAGS?=-Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe
 
 CXXINC?=$(CINC)
 DEBUG_CXXFLAGS=$(DEBUG_CFLAGS)
 CXXFLAGS?=$(CFLAGS)
 
-REALCC=$(CC) $(CFLAGS) $(DEBUG_CFLAGS) $(CINC)
-REALCXX=$(CXX) $(CXXFLAGS) $(DEBUG_CXXFLAGS) $(CXXINC)
-REALLD=$(LINK) $(LDPATH)
+REALCC=$(CC) $(CFLAGS) $(DEBUG_CFLAGS) $(COVERAGE_FLAGS) $(CINC)
+REALCXX=$(CXX) $(CXXFLAGS) $(DEBUG_CXXFLAGS) $(COVERAGE_FLAGS) $(CXXINC)
+REALLD=$(LINK) $(LDPATH) $(COVERAGE_LINK)
 REALAR=$(AR)
 REALINSTALL=$(INSTALL)
 REALTDR=$(TDR) $(TDRINC)
@@ -41,7 +51,7 @@ WRITER_OFILE=$(WRITER_HFILE:.h=.o)
 OFILE=$(CFILE:.c=.o) $(CPPFILE:.cpp=.o) $(READER_CFILE:.c=.o) $(WRITER_CFILE:.c=.o)
 
 GENFILE=$(SQL_FILE) $(TYPES_HFILE) $(WRITER_HFILE) $(WRITER_CFILE) $(READER_HFILE) $(READER_CFILE)
-.PHONY: all clean dep install tags
+.PHONY: all clean dep install tags cov
 
 all:dep $(GENFILE) $(TARGET)
 
@@ -80,6 +90,6 @@ tags:$(GENFILE)
 	find $(SOURCES) $^ -name "*.h" -or -name "*.c" | cscope -Rbq
 
 clean:
-	$(RM) $(TARGET) $(OFILE) $(DFILE) $(GENFILE) tags cscope.in.out cscope.po.out cscope.out
+	$(RM) $(TARGET) $(OFILE) $(OFILE:.o=.gcno) $(OFILE:.o=.gcda) $(OFILE:.o=gcov) $(DFILE) $(GENFILE) tags cscope.in.out cscope.po.out cscope.out
 
 include $(DFILE)

@@ -19,6 +19,9 @@ include $(HOME)/build.mk
 dep:
 	@mkdir -p bin
 
+cov:$(CFILE) $(CPPFILE)
+	gcov -n -b -osource/ $^
+
 install:
 	mkdir -p $(PREFIX)
 	cp -rf bin $(PREFIX)
