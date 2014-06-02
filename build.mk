@@ -5,6 +5,7 @@ AR=ar
 RM=/bin/rm -f
 INSTALL=cp -rpf
 TDR=tdr --MMD
+GCOV=gcov
 
 PREFIX?=/usr/local/tsf4g/
 SOURCES?=.
@@ -37,6 +38,7 @@ REALLD=$(LINK) $(LDPATH) $(COVERAGE_LINK)
 REALAR=$(AR)
 REALINSTALL=$(INSTALL)
 REALTDR=$(TDR) $(TDRINC)
+REALGCOV=$(GCOV) -a -b -c
 
 SQL_FILE=$(SQL_TDR_FILE:.tdr=_tables.sql)
 TYPES_HFILE=$(TYPES_TDR_FILE:.tdr=_types.h)
@@ -70,11 +72,11 @@ $(BINARY): $(OFILE) $(DEPOFILE)
 	$(REALCXX) -o $@ -MMD -c $<
 
 %.c.gcov:%.c
-	gcov -o$< $<
+	$(REALGCOV) -o$< $<
 	mv $(@F) $@
 
 %.cpp.gcov:%.cpp
-	gcov -o$< $<
+	$(REALGCOV) -o$< $<
 	mv $(@F) $@
 
 $(SQL_FILE):$(SQL_TDR_FILE)
