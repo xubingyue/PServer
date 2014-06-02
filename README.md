@@ -136,6 +136,14 @@ Install
     17. 修改/etc/ld.so.conf文件
         /usr/local/mysql/lib/
     18. 执行ldconfig
+
+- Lua
+	1. wget http://www.lua.org/ftp/lua-5.2.3.tar.gz
+	2. tar -xf lua-5.2.3.tar.gz
+	3. cd lua-5.2.3
+	4. 修改 lua-5.2.3/src/Makefile中的linux目标， 加入-lncurses。
+	5. make linux
+	6. make install
     
 
 - Chkconfig
