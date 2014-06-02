@@ -3,6 +3,7 @@ require_once (dirname(__FILE__)) . '/manage.php';
 require_once (dirname(__FILE__)) . '/service.php';
 require_once (dirname(__FILE__)) . '/setup.php';
 require_once (dirname(__FILE__)) . '/install.php';
+require_once (dirname(__FILE__)) . '/coverage.php';
 require_once (dirname(__FILE__)) . '/help.php';
 
 function page_master($title, $hi, $content)
@@ -25,9 +26,13 @@ function page_master($title, $hi, $content)
 	$info['menu'][3]['href'] = "/install";
 	$info['menu'][3]['highlight'] = false;
 
-	$info['menu'][4]['content'] = "帮助";
-	$info['menu'][4]['href'] = "/help";
+	$info['menu'][4]['content'] = "代码覆盖率";
+	$info['menu'][4]['href'] = "/coverage";
 	$info['menu'][4]['highlight'] = false;
+
+	$info['menu'][5]['content'] = "帮助";
+	$info['menu'][5]['href'] = "/help";
+	$info['menu'][5]['highlight'] = false;
 
 
 	$info['menu'][$hi]['highlight'] = true;
@@ -48,6 +53,9 @@ function page_master($title, $hi, $content)
 
 		<link rel="stylesheet" href="/css/install.css" type="text/css" media="all" />
         <script type="text/javascript" src="/js/install.js"></script>
+
+		<link rel="stylesheet" href="/css/coverage.css" type="text/css" media="all" />
+        <script type="text/javascript" src="/js/coverage.js"></script>
 </head>
 <body>
     <div id="container">
@@ -55,7 +63,7 @@ function page_master($title, $hi, $content)
 
 		<div id="head">
 			<div id = "head_top">
-				<a href = "/"><img src = "/images/logo.png" sytle = "border:none;margin-top:10px" /></a>
+				<a href = "/"><img src = "/images/logo.png" style = "border:none;margin-top:10px" /></a>
 			</div>
 			<div class = "head_line"></div>	
 			<div class = "head_bottom" >	
@@ -64,7 +72,7 @@ function page_master($title, $hi, $content)
 				foreach($info['menu'] as $menu)
 				{
 ?>
-        	    	<li <?php if ($menu['highlight']) { ?> class = "highlight" <?php } ?> onclick = "window.location = '<?php echo $menu['href']; ?>'" />
+        	    	<li <?php if ($menu['highlight']) { ?> class = "highlight" <?php } ?> onclick = "window.location = '<?php echo $menu['href']; ?>'" >
 				    	<span><?php echo $menu['content']; ?></span>
 				    </li>
 <?php
@@ -81,14 +89,23 @@ function page_master($title, $hi, $content)
 				<?php
 					switch ($content)
 					{
-						case 'process':
-							page_process(null);
+						case 'manage':
+							page_manage(null);
 							break;
-						case 'help':
-							page_help(null);
+						case 'service':
+							page_service(null);
 							break;
 						case 'install':
 							page_install(null);
+							break;
+						case 'setup':
+							page_setup(null);
+							break;
+						case 'coverage':
+							page_coverage(null);
+							break;
+						case 'help':
+							page_help(null);
 							break;
 					}                                
 				?>

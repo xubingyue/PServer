@@ -108,5 +108,6 @@ gcovclean:
 
 clean:
 	$(RM) $(TARGET) $(OFILE) $(OFILE:.o=.gcno) $(OFILE:.o=.gcda) $(OFILE:.o=gcov) $(DFILE) $(GENFILE) $(GCOVFILE) tags cscope.in.out cscope.po.out cscope.out
+	rm -rf coverage.info coverage
 
 include $(DFILE)

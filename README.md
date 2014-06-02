@@ -144,6 +144,13 @@ Install
 	4. 修改 lua-5.2.3/src/Makefile中的linux目标， 加入-lncurses。
 	5. make linux
 	6. make install
+
+- LCOV
+	1. wget http://downloads.sourceforge.net/ltp/lcov-1.11.tar.gz
+	2. tar -xf lcov-1.11.tar.gz
+	3. cd lcov-1.11
+	4. make install
+
     
 
 - Chkconfig

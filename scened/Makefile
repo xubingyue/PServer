@@ -20,10 +20,19 @@ DFILE+=$(wildcard tdr/*.d)
 DFILE+=$(wildcard source/script/*.d)
 
 include $(HOME)/build.mk
+.PHONY: lcov lcovclean
 
 dep:
 	@mkdir -p bin
 
+lcov:
+	lcov --capture --directory source --output-file coverage.info 
+	genhtml coverage.info --output-directory coverage/scened --show-details --legend
+	cp -rf coverage ../guard/htdocs/
+
+lcovclean:
+	rm -rf coverage.info
+	rm -rf coverage
 
 install:
 	mkdir -p $(PREFIX)
