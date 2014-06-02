@@ -49,9 +49,11 @@ WRITER_OFILE=$(WRITER_HFILE:.h=.o)
 
 
 OFILE=$(CFILE:.c=.o) $(CPPFILE:.cpp=.o) $(READER_CFILE:.c=.o) $(WRITER_CFILE:.c=.o)
+GCOVFILE=$(CFILE:.c=.c.gcov) $(CPPFILE:.cpp=.cpp.gcov)
 
 GENFILE=$(SQL_FILE) $(TYPES_HFILE) $(WRITER_HFILE) $(WRITER_CFILE) $(READER_HFILE) $(READER_CFILE)
-.PHONY: all clean dep install tags cov
+
+.PHONY: all clean dep install tags gcov
 
 all:dep $(GENFILE) $(TARGET)
 
@@ -66,6 +68,14 @@ $(BINARY): $(OFILE) $(DEPOFILE)
 
 %.o: %.cpp
 	$(REALCXX) -o $@ -MMD -c $<
+
+%.c.gcov:%.c
+	gcov -o$< $<
+	mv $(@F) $@
+
+%.cpp.gcov:%.cpp
+	gcov -o$< $<
+	mv $(@F) $@
 
 $(SQL_FILE):$(SQL_TDR_FILE)
 	$(REALTDR) -g sql $^
@@ -89,7 +99,12 @@ tags:$(GENFILE)
 	find $(SOURCES) $^ -name "*.c" -or -name "*.h" | xargs ctags -a --c-types=+p+x
 	find $(SOURCES) $^ -name "*.h" -or -name "*.c" | cscope -Rbq
 
+gcov:$(GCOVFILE)
+
+gcovclean:
+	$(RM) $(GCOVFILE)
+
 clean:
-	$(RM) $(TARGET) $(OFILE) $(OFILE:.o=.gcno) $(OFILE:.o=.gcda) $(OFILE:.o=gcov) $(DFILE) $(GENFILE) tags cscope.in.out cscope.po.out cscope.out
+	$(RM) $(TARGET) $(OFILE) $(OFILE:.o=.gcno) $(OFILE:.o=.gcda) $(OFILE:.o=gcov) $(DFILE) $(GENFILE) $(GCOVFILE) tags cscope.in.out cscope.po.out cscope.out
 
 include $(DFILE)

@@ -11,7 +11,9 @@ TYPES_TDR_FILE=$(wildcard tdr/*.tdr)
 READER_TDR_FILE=$(wildcard tdr/*.tdr)
 
 CPPFILE=$(wildcard source/*.cpp)
-CFILE=$(wildcard source/script/*.c)
+CFILE=$(wildcard source/*.c)
+
+CFILE+=$(wildcard source/script/*.c)
 
 DFILE=$(wildcard source/*.d)
 DFILE+=$(wildcard tdr/*.d)
@@ -22,8 +24,6 @@ include $(HOME)/build.mk
 dep:
 	@mkdir -p bin
 
-cov:$(CFILE) $(CPPFILE)
-	gcov -n -osource/ $^ | egrep -o '[0-9]+\.[0-9]+' | awk '{tot+=$$1}END{print "平均代码覆盖率: " tot/NR "%"}'
 
 install:
 	mkdir -p $(PREFIX)
