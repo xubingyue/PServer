@@ -9,9 +9,12 @@
 			</div>
 			<div style = "float:right">
 				<div class = "Btn" style = "float:right">
-					<div class = "CoverageRefreshBtn" id = "scened">刷新</div>
+					<div class = "CoverageGenerateBtn" id = "scened">生成</div>
 				</div>
-				<div id = "CoverageRefreshResult" class = "CoverageRefreshResult" ></div>
+				<div class = "Btn" style = "float:right">
+					<div class = "CoverageResetBtn" id = "scened">重置</div>
+				</div>
+				<div class = "CoverageResult" id = "scened" style = "float:right"></div>
 			</div>
 		</div>
 	</div>

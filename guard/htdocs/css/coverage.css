@@ -2,13 +2,16 @@
   coverage.css
 */
 
-.CoverageRefreshResult
+.CoverageResult
 {
-	float:right;
+	margin-right:10px;
 }
 
-.CoverageRefreshBtn
+.CoverageGenerateBtn
 {
-	float:right;
 }
 
+.CoverageResetBtn
+{
+	margin-right:10px;
+}

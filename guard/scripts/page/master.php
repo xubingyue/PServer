@@ -31,18 +31,15 @@ function page_master($title, $hi, $content)
 	$info['menu'][$num]['highlight'] = false;
 	++$num;
 
+	$info['menu'][$num]['content'] = "代码覆盖率";
+	$info['menu'][$num]['href'] = "/coverage";
+	$info['menu'][$num]['highlight'] = false;
+	++$num;
+
 	$info['menu'][$num]['content'] = "帮助";
 	$info['menu'][$num]['href'] = "/help";
 	$info['menu'][$num]['highlight'] = false;
 	++$num;
-
-	if(ADMIN)
-	{
-		$info['menu'][$num]['content'] = "代码覆盖率";
-		$info['menu'][$num]['href'] = "/coverage";
-		$info['menu'][$num]['highlight'] = false;
-		++$num;
-	}
 
 	$info['menu'][$hi]['highlight'] = true;
 ?>
