@@ -1,175 +1,75 @@
-#parameter list
-NAME?=
-EXECUTABLE?=0
-USE_CXX?=0
-
-DEPTARET_DIR?=..
-DEPTARGET?=
-
-DEPLOCALINCLUDE?=/usr/local/TLibC/include
-DEPLOCALLD?=/usr/local/TLibC/lib
-DEPLOCALLIBS?=tlibc
-
-PREFIX?=/usr/local/$(NAME)
-
-CINC=-I include 
-CINC+=$(patsubst %, -I $(DEPTARET_DIR)/%/include, $(DEPTARGET))
-CINC+=$(patsubst %, -I %, $(DEPLOCALINCLUDE))
-ifdef MAKE_RELEASE
-CFLAGS ?= -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -O3 $(CINC) -DMAKE_RELEASE
-CXXFLAGS ?= -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -O3 $(CINC) -DMAKE_RELEASE
-else
-CFLAGS ?= -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -g -ggdb $(CINC) -DMAKE_DEBUG
-CXXFLAGS ?= -Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe -g -ggdb $(CINC) -DMAKE_DEBUG
-endif
-#parameter list
-
-LDPATH+=$(patsubst %, -L $(DEPTARET_DIR)/%/lib, $(DEPTARGET))
-DEPLIBS+=$(patsubst %, -l %, $(DEPTARGET))
-
-LDPATH+=$(patsubst %, -L %, $(DEPLOCALLD))
-DEPLIBS+=$(patsubst %, -l %, $(DEPLOCALLIBS))
-
-SOURCE=source
-INCLUDE=include
-BINARY=bin
-LIBRARY=lib
-ETC=etc
-TDATA=tdata
-THRIFT=thrift
-
-CC = gcc
-CXX= g++
-AR = ar
-RM = /bin/rm -f
+CC=gcc
+AR=ar
+RM=/bin/rm -f
 INSTALL=cp -rpf
+TDR=tdr --MMD
 
+PREFIX?=/usr/local/tsf4g/
+SOURCES?=.
 
+CFLAGS?=-Wall -Wconversion -Wcast-qual -Wpointer-arith -Wredundant-decls -Wmissing-declarations -Werror --pipe
 
-
-REALCC=$(CC) $(CFLAGS)
-REALCXX=$(CXX) $(CXXFLAGS)
-ifeq ($(USE_CXX),1)
-REALLD=$(CXX) $(LDPATH)
+ifdef debug
+DEBUG_CFLAGS=-g -ggdb -DMAKE_DEBUG
 else
-REALLD=$(CC) $(LDPATH)
+DEBUG_CFLAGS=-O3 -DMAKE_RELEASE
 endif
+
+REALCC=$(CC) $(CFLAGS) $(DEBUG_CFLAGS) $(CINC)
+REALLD=$(CC) $(LDPATH)
 REALAR=$(AR)
 REALINSTALL=$(INSTALL)
-REALTDATA=$(TDATA) $(CINC)
-REALTHRIFT=$(THRIFT) --gen cpp -out $(INCLUDE)
+REALTDR=$(TDR) $(TDRINC)
 
-THRIFT_FILES=$(wildcard $(INCLUDE)/*.thrift)
-THRIFT_SERVICES_FILES=$(wildcard $(INCLUDE)/*_services.thrift)
+SQL_FILE=$(SQL_TDR_FILE:.tdr=_tables.sql)
+TYPES_HFILE=$(TYPES_TDR_FILE:.tdr=_types.h)
+READER_HFILE=$(READER_TDR_FILE:.tdr=_reader.h)
+READER_CFILE=$(READER_HFILE:.h=.c)
+READER_OFILE=$(READER_HFILE:.h=.o)
+WRITER_HFILE=$(WRITER_TDR_FILE:.tdr=_writer.h)
+WRITER_CFILE=$(WRITER_HFILE:.h=.c)
+WRITER_OFILE=$(WRITER_HFILE:.h=.o)
 
-THRIFT_CONSTANTS_CCFILE=$(THRIFT_FILES:.thrift=_constants.cpp)
-THRIFT_TYPES_CCFILE=$(THRIFT_FILES:.thrift=_types.cpp)
-THRIFT_SERVICES_CCFILE=$(THRIFT_SERVICES_FILES:.thrift=.cpp)
 
-THRIFT_CONSTANTS_HFILE=$(THRIFT_FILES:.thrift=_constants.h)
-THRIFT_TYPES_HFILE=$(THRIFT_FILES:.thrift=_types.h)
-THRIFT_SERVICES_HFILE=$(THRIFT_SERVICES_FILES:.thrift=.h)
-THRIFT_SERVICES_SKELETON_CCFILE=$(THRIFT_SERVICES_FILES:.thrift=_async_server.skeleton.cpp)
-THRIFT_SERVICES_SKELETON_CCFILE+=$(THRIFT_SERVICES_FILES:.thrift=_server.skeleton.cpp)
+OFILE=$(CFILE:.c=.o) $(READER_CFILE:.c=.o) $(WRITER_CFILE:.c=.o)
 
-THRIFT_OFILE=$(THRIFT_CONSTANTS_CCFILE:.cpp=.o)
-THRIFT_OFILE+=$(THRIFT_TYPES_CCFILE:.cpp=.o)
-THRIFT_OFILE+=$(THRIFT_SERVICES_CCFILE:.cpp=.o)
+GENFILE=$(SQL_FILE) $(TYPES_HFILE) $(WRITER_HFILE) $(WRITER_CFILE) $(READER_HFILE) $(READER_CFILE)
+.PHONY: all clean dep install tags
 
-TDATA_FILE=$(wildcard $(INCLUDE)/*.td)
+all:dep $(GENFILE) $(TARGET)
 
-TYPES_HFILE=$(patsubst %.td, %_types.h, $(TDATA_FILE))
-READER_HFILE=$(TDATA_FILE:.td=_reader.h)
-WRITER_HFILE=$(TDATA_FILE:.td=_writer.h)
-READER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_reader.c, $(TDATA_FILE))
-READER_OFILE=$(READER_CFILE:.c=.o)
-WRITER_CFILE=$(patsubst $(INCLUDE)/%.td, $(SOURCE)/%_writer.c, $(TDATA_FILE))
-WRITER_OFILE=$(WRITER_CFILE:.c=.o)
+$(LIBRARY): $(OFILE)
+	$(REALAR) r $(LIBRARY) $^
 
-CFILE=$(wildcard $(SOURCE)/*.c)
-CXXFILE=$(wildcard $(SOURCE)/*.cpp)
-
-OFILE=$(CFILE:.c=.o)
-OFILE+=$(CXXFILE:.cpp=.o)
-
-LIB=$(LIBRARY)/lib$(NAME).a
-APP=$(BINARY)/$(NAME)
-ifeq ($(EXECUTABLE),1)
-TARGET=$(APP)
-else
-TARGET=$(LIB)
-endif
-
-.PHONY: all clean install tags
-
-all:$(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(TARGET)
-
-$(LIB): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
-	@mkdir -p $(LIBRARY)
-	@mkdir -p $(INCLUDE)
-	$(REALAR) r $(LIB) $^
-
-$(APP): $(OFILE) $(WRITER_OFILE) $(READER_OFILE) $(THRIFT_OFILE)
-	@mkdir -p $(BINARY)
-	@mkdir -p $(ETC)
+$(BINARY): $(OFILE)
 	$(REALLD) -o $@ $^ $(DEPLIBS)
 
-release:
-	$(MAKE) all MAKE_RELEASE=1
-
-ifeq ($(USE_CXX),1)
-%.o: %.cpp
-	$(REALCXX) -o $@ -c $<
-else
 %.o: %.c
-	$(REALCC) -o $@ -c $<
-endif
+	$(REALCC) -o $@ -MMD -c $<
 
-$(TYPES_HFILE):$(TDATA_FILE)
-	$(REALTDATA) -o $(INCLUDE) -gen types_h $^
+$(SQL_FILE):$(SQL_TDR_FILE)
+	$(REALTDR) -g sql $^
 
-$(READER_HFILE):$(TDATA_FILE)
-	$(REALTDATA) -o $(INCLUDE) -gen reader_h $^
+$(TYPES_HFILE):$(TYPES_TDR_FILE)
+	$(REALTDR) -g types_h $^
 
-$(WRITER_HFILE):$(TDATA_FILE)
-	$(REALTDATA) -o $(INCLUDE) -gen writer_h $^
+$(READER_HFILE):$(READER_TDR_FILE)
+	$(REALTDR) -g reader_h $^
 
-$(READER_CFILE):$(TDATA_FILE)
-	$(REALTDATA) -o $(SOURCE) -gen reader_c $^
+$(READER_CFILE):$(READER_TDR_FILE)
+	$(REALTDR) -g reader_c $^
 	
-$(WRITER_CFILE):$(TDATA_FILE)
-	$(REALTDATA) -o $(SOURCE) -gen writer_c $^
+$(WRITER_HFILE):$(WRITER_TDR_FILE)
+	$(REALTDR) -g writer_h $^
 
-%_constants.cpp:%.thrift
-	$(REALTHRIFT) $<
+$(WRITER_CFILE):$(WRITER_TDR_FILE)
+	$(REALTDR) -g writer_c $^
 
-%_types.cpp:%.thrift
-	$(REALTHRIFT) $<
-
-%_services.cpp:%_services.thrift
-	$(REALTHRIFT) $<
-
-install:
-	@mkdir -p $(PREFIX)
-ifeq ($(EXECUTABLE),1)
-	$(REALINSTALL) $(BINARY) $(PREFIX)
-	$(REALINSTALL) $(ETC) $(PREFIX)
-else
-	$(REALINSTALL) $(INCLUDE) $(PREFIX)
-	$(REALINSTALL) $(LIBRARY) $(PREFIX)
-endif
-
-tags:
-	@find $(DEPLOCALINCLUDE) -name "*.h" -or -name "*.hpp" | xargs ctags -a --c-types=+p+x 
-	@find . -name "*.c" -or -name "*.h" -or -name "*.cpp" -or -name "*.hpp" | xargs ctags -a --c-types=+p+x
-	@find . -name "*.h" -or -name "*.c" -or -name "*.cpp" -or -name "*.hpp" | cscope -Rbq
+tags:$(GENFILE)
+	find $(SOURCES) $^ -name "*.c" -or -name "*.h" | xargs ctags -a --c-types=+p+x
+	find $(SOURCES) $^ -name "*.h" -or -name "*.c" | cscope -Rbq
 
 clean:
-	@find . -name "*.o" | xargs $(RM)
-	@$(RM) $(TARGET) $(TYPES_HFILE) $(READER_HFILE) $(WRITER_HFILE) $(READER_CFILE) $(READER_OFILE) $(WRITER_CFILE) $(WRITER_OFILE) tags cscope.in.out cscope.po.out cscope.out
-	@$(RM) $(THRIFT_CONSTANTS_CCFILE) $(THRIFT_TYPES_CCFILE) $(THRIFT_SERVICES_CCFILE)
-	@$(RM) $(THRIFT_CONSTANTS_HFILE) $(THRIFT_TYPES_HFILE) $(THRIFT_SERVICES_HFILE)
-	@$(RM) $(THRIFT_SERVICES_CCFILE)
-	@$(RM) $(THRIFT_SERVICES_HFILE)
-	@$(RM) $(THRIFT_SERVICES_SKELETON_CCFILE)
+	$(RM) $(TARGET) $(OFILE) $(DFILE) $(GENFILE) tags cscope.in.out cscope.po.out cscope.out
 
+include $(DFILE)

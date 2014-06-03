@@ -1,11 +1,19 @@
-NAME=robotd
-EXECUTABLE=1
-DEPTARGET=common centerp
-USE_CXX=1
+BINARY=bin/robotd
+TARGET= $(BINARY)
+HOME=../
+CINC=-I/usr/local/tlibc/include/
+LDPATH=-L/usr/local/tlibc/lib
+DEPLIBS=-ltlibc
 
-SHARED_DIR=../../PShared
-DEPLOCALINCLUDE=/usr/local/TLibC/include $(SHARED_DIR)/centerp/include
-DEPLOCALLD=/usr/local/TLibC/lib $(SHARED_DIR)/centerp/lib
-DEPLOCALLIBS=tlibc centerp
+CFILE=$(wildcard source/*.c)
+DFILE=$(wildcard source/*.d)
 
-include ../build.mk
+include $(HOME)/build.mk
+
+dep:
+	@mkdir -p bin
+
+install:
+	mkdir -p $(PREFIX)
+	cp -rf bin $(PREFIX)
+

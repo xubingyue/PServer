@@ -1,6 +1,19 @@
-NAME=scened
-EXECUTABLE=1
-DEPTARGET=common
-USE_CXX=1
+BINARY=bin/scened
+TARGET= $(BINARY)
+HOME=../
+CINC=-I/usr/local/tlibc/include/
+LDPATH=-L/usr/local/tlibc/lib
+DEPLIBS=-ltlibc
 
-include ../build.mk
+CFILE=$(wildcard source/*.c)
+DFILE=$(wildcard source/*.d)
+
+include $(HOME)/build.mk
+
+dep:
+	@mkdir -p bin
+
+install:
+	mkdir -p $(PREFIX)
+	cp -rf bin $(PREFIX)
+

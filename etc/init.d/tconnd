@@ -1,0 +1,28 @@
+#!/bin/bash
+# chkconfig: - 85 15
+# description:php-fpm
+
+app_name=php-fpm
+app_exe=/usr/local/sbin/$app_name
+
+start() {
+        echo -n $"Starting $app_name: "
+	$app_exe
+}
+
+stop() {
+	echo -n $"Stopping $app_name: "
+	killall $app_exe
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  *)
+	echo $"Usage: $app_name {start|stop}"
+	exit 1
+esac

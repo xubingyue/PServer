@@ -1,0 +1,36 @@
+#!/bin/bash
+# chkconfig: - 85 15
+# description:nginx
+
+app_name=nginx
+app_exe=/usr/local/nginx/sbin/$app_name
+
+start() {
+        echo -n $"Starting $app_name: "
+	$app_exe
+}
+
+stop() {
+	echo -n $"Stopping $app_name: "
+	$app_exe -s stop
+}
+
+reload() {
+    echo -n $"Reloading $app_name: "
+    $app_exe -s reload
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  reload)
+        reload
+	;;
+  *)
+	echo $"Usage: $app_name {start|stop|reload}"
+	exit 1
+esac

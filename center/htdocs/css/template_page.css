@@ -1,0 +1,581 @@
+/*
+  template_page.css
+*/
+html,body{
+	margin:0; 
+	padding:0;
+	min-width:960px;
+	min-height:1024px;
+	font-family: 'Microsoft Yahei', ΢���ź�, Tahoma, Arial, Helvetica, STHeiti;	
+}
+
+.art_title a
+{
+    color:#7a897f;
+    text-decoration:none;
+    line-height:30px;
+}
+
+a{
+	font-weight:bold;
+	color:#3f4446;
+	cursor: pointer;
+}
+
+#container{
+}
+
+#head{
+	height:137px;
+	width:100%;	
+	background-color:floralwhite;
+}
+
+#main{
+	width:960px;
+	margin-top:0;
+	margin-left:auto;
+	margin-right:auto;	
+}
+
+
+
+#footer{  
+  padding: 25px 0 0 0;
+  border-top: 1px solid #D4D4D4;
+  background: #EDEDED;
+  clear:both;
+  text-align:center;
+}
+#content{
+	clear:both;
+	margin:0;
+	padding:0;
+	padding-top:10px;
+	width:620px;
+	float:left;
+}
+#content ul{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#content ul li.contentli{
+	overflow:hidden;
+	clear:both;
+	margin-bottom:20px;	
+}
+#content ul li .author{
+	height:32px;
+	font-size:18px;
+	margin-bottom:17px;
+}
+#content ul li .author img{
+	margin-right:10px;
+	height:32px;
+	width:32px;
+}
+
+#content ul li .detail{
+	margin-top:10px;
+	margin-bottom:10px;
+	line-height:24px;
+        font-size: 15px;
+        font-family: "宋体B8B\4F53";
+}
+#content ul li .cBiaoti a{
+	color:#7a897f;
+	font-weight:bold;
+	text-decoration:none;
+}
+#content ul li .commentBar{
+        font-size: smaller;
+	width:100%;
+	height:30px;
+}
+#content ul li .commentBar .upBtn,#content ul li .downBtn,#content ul li .replyBtn{
+	color:#000000;
+	font-weight:bold;
+	text-decoration:none;
+}
+#content ul li .commentBar a{
+        text-decoration:none;
+        float:left;
+	background-image:url(/images/handles_cross.gif);
+	background-repeat:no-repeat;
+	background-position: left center;
+	padding-left:18px;
+        height:20px;
+	cursor: pointer;        
+}
+#content ul li .commentBar .upBtn{
+	float:left;
+        margin-left:50px;
+	background-image:url(/images/handles_up.gif);
+	background-repeat:no-repeat;
+	background-position: left center;
+	padding-left:18px;
+	cursor: pointer;
+}
+#content ul li .commentBar .downBtn{
+	float:left;
+	margin-left:50px;
+	background-image:url(/images/handles_down.gif);
+	background-repeat:no-repeat;
+	background-position: left center;
+	padding-left:18px;
+	cursor: pointer;
+}
+#content ul li .commentBar .tips{
+	float:left;	
+	color:#999;
+}
+#content ul li .commentBar .tips b{
+	width:137px;
+	background-image: url(/images/handles_up.gif);
+	background-repeat: no-repeat;
+}
+#content ul li .commentBar .replyBtn{
+	float:right;
+	margin-right:10px;
+	cursor: pointer;
+	
+}
+#content ul li .replyDetail{
+	display:none;
+	font-size:12px;
+	padding-bottom:15px;
+	padding-top:10px;
+}
+#content ul li .replyDetail ul{
+	margin-top:0px;
+	margin-left:70px;
+}
+#content ul li .replyDetail ul li.replayli{
+	float:left;
+	margin:0;
+	padding:0;
+	padding-top:10px;
+	padding-bottom:10px;
+	width:550px;	
+	margin-top:5px;
+	border-bottom:solid #999 1px;
+}
+#content ul li .replyDetail ul li.replayli div.replyAuthor{
+	float:left;
+
+}
+#content ul li .replyDetail ul li.replayli div.replyContent a{
+	margin-right:20px;
+}
+#content ul li .replyDetail ul li.replayli div.replyContent{
+	float:left;
+	margin-left:20px;
+	width:390px; 
+	color:#666666;	
+	word-wrap : break-word;
+}
+
+#content ul li .replyDetail ul li.replayli div.replyControl{
+	float:right;
+}
+
+
+#content ul li .replyDetail ul li.replayli div.deleteBtn{
+	float:left;	
+	cursor: pointer;
+	margin-left:2px;
+}
+#content ul li .replyDetail ul li.replayli div.depurgeBtn{
+	float:left;	
+	cursor: pointer;
+	margin-left:2px;
+}
+
+#content ul li .replyDetail ul li.replayli div.order{
+	margin-left:5px;	
+	float:right;
+	cursor: pointer;
+	color:#999;
+	width:20px;
+}
+#content ul li .replyDetail ul li.replayli div.reportBtn{
+	float:right;
+	cursor: pointer;
+	margin-left:2px;
+}
+#content ul li .replyDetail div.commentPanel{
+	margin-left:70px;
+	margin-top:5px;
+}
+#replyControl div
+{
+	float:right;
+}
+#content ul li .replyDetail div.commentPanel textarea{
+	width:100%;
+}
+
+#content ul li .replyDetail div.nologin{
+	padding-left:70px;
+	font-size:12px;
+	line-height:40px;
+}
+#biaoti{
+   float:right;
+   margin:0;
+   margin-top:10px;
+   padding:0;
+   width:300px;   
+   background-color:#FFFEEB;
+   padding:16px;
+}
+
+.biaoti_item
+{
+     clear:both;
+     width: 300px;
+     float:left;
+}
+
+#biaoti h3{
+	font-weight:normal;
+	font-size: 21px;
+	color: #A38100;
+	margin:0;
+	margin-bottom:10px;
+}
+
+.biaoti0 a
+{	
+	color:#A35100;
+        float:right;
+}
+
+.biaoti1 a
+{
+	font-size: 38px;
+	color:#000000;
+}
+
+.biaoti2 a
+{
+	font-size: 21px;
+	color:#ffffff;
+	background-color:#91c21c;
+}
+
+.deleteBiaotiBtn
+{
+    color: #62A4DA;
+    cursor: pointer;            
+}
+
+.art_left
+{
+	float:left;
+	margin:0px;
+	padding:0px;
+	width:80%;
+}
+
+.art_right
+{
+	float:right;
+	margin:0px;
+	padding:0px;
+	width:20%;	
+}
+
+.art_bottom
+{
+	float:right;
+	width:100%;
+}
+
+.du_leftSegment
+{
+    float:left;
+    width:27%;    
+    background-color: #d9d598;
+}
+
+.du_rightSegment
+{
+    float:right;
+    width:67%;    
+    background-color: #99ae6a;
+}
+
+.du_middleSegment
+{
+    width:6%;
+    text-align:center;
+}
+
+.shenzuoBtn
+{
+    font-weight: bolder;
+    cursor:pointer;
+}
+
+.shiduBtn
+{
+    font-weight:bolder;
+    cursor:pointer;
+}
+
+.retrialArtBtn
+{
+	color:#62A4DA;
+	cursor:pointer;
+}
+
+.deleteArtBtn
+{
+	color:#62A4DA;
+	cursor:pointer;
+}
+
+.varifyYesBtn
+{
+	color:#62A4DA;
+	cursor:pointer;
+}
+
+.varifyNoBtn
+{
+	color:#62A4DA;
+	cursor:pointer;
+}
+
+.art_content textarea
+{
+	width:100%;
+	height:260px;
+}
+
+
+.art_sub input
+{
+	line-height: 180%;
+	height: 50px;
+	width: 300px;
+	font-size: 21px;
+}
+
+.shieldBtn {
+	color: #62A4DA;
+	cursor: pointer;
+}
+.clearReportBtn {
+	color: #62A4DA;
+	cursor: pointer;
+}
+
+.control_plane .btn
+{
+	color: #62A4DA;
+	cursor: pointer;	
+}
+
+.art_btn_plane div
+{
+    color: #62A4DA;
+    cursor: pointer
+}
+
+
+.benzhouhuati
+{
+    height: 44px;
+    color:white;
+    background-image:url(/images/benzhouhuati.png);
+    background-repeat:no-repeat;
+    background-position: left center;
+    font-size: 25px;
+}
+
+.benzhouhuati .b_title
+{
+    color: yellow;
+    padding-top: 4px;
+    float:left;
+    font-weight: bold;
+}
+
+.benzhouhuati .b_content
+{
+    color: yellow;
+    padding-top: 4px;
+    float:right;
+    font-weight: bold;
+}
+
+.cBiaoti
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: smaller;
+}
+
+.art_author
+{
+    width:100%;
+    height:22px;
+}
+
+.art_figure_url
+{
+    float:left;
+}
+
+.art_user_name
+{
+    float:left;
+}
+
+.modifyFigureUrlBtn, .modifyPasswordBtn, .modifyemailBtn
+{
+    color: #62A4DA;
+    cursor: pointer
+}
+
+.biaoti_right_arrow0
+{    
+    width: 100%;
+    height:51px;
+    background-image:url(/images/right_arrow0.png);
+    background-repeat:no-repeat;
+    background-position: right center;   
+}
+
+.biaoti_right_arrow0 a
+{
+    padding-top: 8px;
+    float:left;
+    text-decoration:none;
+    color:white;
+    font-size: 23px;
+}
+
+.biaoti_right_arrow1
+{    
+    width: 100%;
+    height: 36px;
+    background-image:url(/images/right_arrow1.png);
+    background-repeat:no-repeat;
+    background-position: left center;   
+}
+
+.biaoti_right_arrow1 a
+{
+    padding-top: 2px;
+    float: left;
+    color:#1e307b;
+    font-size: 23px;
+    text-decoration:none;
+}
+
+.biaoti_right_arrow2
+{
+    width: 100%;
+    height: 57px;
+    background-image:url(/images/right_arrow2.png);
+    background-repeat:no-repeat;
+    background-position: left center;   
+}
+
+.biaoti_right_arrow2 a
+{
+    padding-top: 8px;
+    float: left;
+    color:#574626;
+    font-size: 29px;
+    text-decoration:none;
+}
+
+.biaoti_right_arrow3
+{    
+    width: 100%;
+    height: 30px;
+    background-image:url(/images/right_arrow3.png);
+    background-repeat:no-repeat;
+    background-position: left center;   
+}
+
+.biaoti_right_arrow3 a
+{
+    padding-top: 2px;
+    float: left;
+    color:black;
+    font-size: 19px;
+    text-decoration:none;
+}
+
+.biaoti_left_arrow0
+{
+    width: 100%;
+    height: 51px;
+    background-image:url(/images/left_arrow0.png);
+    background-repeat:no-repeat;
+    background-position: left center;   
+}
+
+.biaoti_left_arrow0 a
+{
+    padding-top: 3px;
+    float: right;
+    color:yellow;
+    font-size: 30px;    
+    text-decoration:none;
+}
+.biaoti_left_arrow1
+{
+    width: 100%;
+    height: 33px;
+    background-image:url(/images/left_arrow1.png);
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+
+.biaoti_left_arrow1 a
+{
+    padding-top: 2px;
+    float: right;
+    color:#574626;
+    font-size: 21px;
+    text-decoration:none;
+}
+
+.biaoti_left_arrow2
+{
+    width: 100%;
+    height: 44px;
+    background-image:url(/images/left_arrow2.png);
+    background-repeat:no-repeat;
+    background-position: right center;
+}
+
+.biaoti_left_arrow2 a
+{
+    padding-top: 3px;
+    float: right;
+    color:#f54029;
+    font-size: 26px;
+    text-decoration:none;
+}
+
+
+
+.tpl_biaoti a
+{
+    font-weight:bold;
+}
+
+#footer a
+{
+    padding-left: 10px;
+    font-size:15px;
+    color:black;    
+}
