@@ -23,6 +23,7 @@ include $(HOME)/build.mk
 
 dep:
 	@mkdir -p bin
+	doxygen
 
 install:
 	mkdir -p $(PREFIX)
