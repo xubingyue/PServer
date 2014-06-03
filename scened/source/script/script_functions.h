@@ -1,9 +1,16 @@
+//////////////////////////////////////////////
+//	COPYRIGHT NOTICE
+//	Copyright (c) 2014, 小星星	(版权声明)
+//	All rights reserved.
+//
+//  Script提供给C调用的函数
+//
+//	@author liuxing
+//
+//////////////////////////////////////////////
 #ifndef _H_SCRIPT_FUNCTIONS_H
 #define _H_SCRIPT_FUNCTIONS_H
 
-/*
- * Script提供给C调用的函数
- */
 
 #ifdef  __cplusplus
 extern "C" {

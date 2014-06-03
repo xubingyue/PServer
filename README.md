@@ -151,6 +151,9 @@ Install
 	3. cd lcov-1.11
 	4. make install
 
+
+- Doxygen
+	1. yum install doxygen
     
 
 - Chkconfig
