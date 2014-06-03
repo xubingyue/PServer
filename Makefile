@@ -1,3 +1,3 @@
-SUBMODS = scened mysql_proxyd robotd
+SUBMODS = common scened mysql_proxyd robotd
 
 include search.mk

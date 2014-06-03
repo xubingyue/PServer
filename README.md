@@ -8,6 +8,8 @@ Introduction
 - guard 运维服务器
 - mysql_proxyd 数据库代理服务器
 - scened 场景服务器
+- robotd 机器人
+- common 公共库
 
 Install
 -------
@@ -30,6 +32,7 @@ Install
     5. make
     6. make install
     7. nginx.conf配置样例
+
         user  randyliu
         server
         {
