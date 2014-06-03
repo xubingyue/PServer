@@ -91,6 +91,5 @@ tags:$(GENFILE)
 
 clean:
 	$(RM) $(TARGET) $(OFILE) $(OFILE:.o=.gcno) $(OFILE:.o=.gcda) $(DFILE) $(GENFILE) tags cscope.in.out cscope.po.out cscope.out
-	rm -rf coverage.info coverage
 
 include $(DFILE)
