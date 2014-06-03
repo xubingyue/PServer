@@ -17,8 +17,18 @@ extern "C" {
 
 #include "lua.h"
 
+/**
+* @brief 初始化函数
+* @param ls 脚本虚拟机句柄
+* @return 无返回值
+*/
 void cf_init(lua_State *ls);
 
+/**
+* @brief 输出错误字符串
+* @param ls 脚本虚拟机句柄
+* @return 返回参数个数
+*/
 int cf_error(lua_State *ls);
 
 #ifdef  __cplusplus
